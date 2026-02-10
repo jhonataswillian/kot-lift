@@ -1,43 +1,51 @@
-# titan-logs-api
+# KtorFit API 🏋️‍♂️⚡
 
-This project was created using the [Ktor Project Generator](https://start.ktor.io).
+**KtorFit** is a high-performance RESTful API designed for tracking gym workouts, loads, and repetitions. Built with **Kotlin** and **Ktor**, this project demonstrates modern backend development practices, focusing on idiomatic Kotlin syntax, asynchronous processing, and type-safe database interactions.
 
-Here are some useful links to get you started:
+## 🚀 Tech Stack
 
-- [Ktor Documentation](https://ktor.io/docs/home.html)
-- [Ktor GitHub page](https://github.com/ktorio/ktor)
-- The [Ktor Slack chat](https://app.slack.com/client/T09229ZC6/C0A974TJ9). You'll need to [request an invite](https://surveys.jetbrains.com/s3/kotlin-slack-sign-up) to join.
+*   **Language:** [Kotlin](https://kotlinlang.org/) (Latest Stable)
+*   **Framework:** [Ktor Server](https://ktor.io/) (Netty Engine)
+*   **Database:** [H2 Database](https://www.h2database.com/) (In-Memory for Dev / File-based)
+*   **ORM:** [Exposed](https://github.com/JetBrains/Exposed) (Kotlin SQL Framework)
+*   **Serialization:** Kotlinx Serialization (JSON)
+*   **Build System:** Gradle Kotlin DSL
 
-## Features
+## 🏗️ Architecture & Features
 
-Here's a list of features included in this project:
+*   **Type-Safe Routing:** Leveraging Ktor's DSL for clean and readable endpoint definitions.
+*   **Async Database Access:** Non-blocking database operations using Exposed's coroutine support.
+*   **Content Negotiation:** Automatic JSON serialization/deserialization.
+*   **Clean Architecture:** Separation of concerns between Routes, Models, and Data Access Objects (DAOs).
 
-| Name                                                                   | Description                                                                        |
-| ------------------------------------------------------------------------|------------------------------------------------------------------------------------ |
-| [Routing](https://start.ktor.io/p/routing)                             | Provides a structured routing DSL                                                  |
-| [kotlinx.serialization](https://start.ktor.io/p/kotlinx-serialization) | Handles JSON serialization using kotlinx.serialization library                     |
-| [Content Negotiation](https://start.ktor.io/p/content-negotiation)     | Provides automatic content conversion according to Content-Type and Accept headers |
-| [Exposed](https://start.ktor.io/p/exposed)                             | Adds Exposed database to your application                                          |
-| [Call Logging](https://start.ktor.io/p/call-logging)                   | Logs client requests                                                               |
+## 🛠️ Getting Started
 
-## Building & Running
+### Prerequisites
+*   JDK 17+
+*   IntelliJ IDEA (Recommended)
 
-To build or run the project, use one of the following tasks:
+### Running the Application
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/YOUR_USERNAME/ktorfit.git
+    ```
+2.  Open the project in IntelliJ IDEA.
+3.  Run the `Application.kt` file or execute via Gradle:
+    ```bash
+    ./gradlew run
+    ```
 
-| Task                                    | Description                                                          |
-| -----------------------------------------|---------------------------------------------------------------------- |
-| `./gradlew test`                        | Run the tests                                                        |
-| `./gradlew build`                       | Build everything                                                     |
-| `./gradlew buildFatJar`                 | Build an executable JAR of the server with all dependencies included |
-| `./gradlew buildImage`                  | Build the docker image to use with the fat JAR                       |
-| `./gradlew publishImageToLocalRegistry` | Publish the docker image locally                                     |
-| `./gradlew run`                         | Run the server                                                       |
-| `./gradlew runDocker`                   | Run using the local docker image                                     |
+The API will start at `http://0.0.0.0:8080`.
 
-If the server starts successfully, you'll see the following output:
+## 📝 API Endpoints (Planned)
 
-```
-2024-12-04 14:32:45.584 [main] INFO  Application - Application started in 0.303 seconds.
-2024-12-04 14:32:45.682 [main] INFO  Application - Responding at http://0.0.0.0:8080
-```
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/workouts` | Create a new workout |
+| `GET` | `/workouts` | List all workouts |
+| `GET` | `/workouts/{id}` | Get specific workout details |
+| `PUT` | `/workouts/{id}` | Update a workout |
+| `DELETE` | `/workouts/{id}` | Remove a workout |
 
+---
+*Built with ❤️ and Kotlin.*
