@@ -1,5 +1,6 @@
 package com.example.plugins
 
+import com.example.database.Exercises
 import com.example.database.Workouts
 import io.ktor.server.application.*
 import org.jetbrains.exposed.sql.*
@@ -14,6 +15,6 @@ fun Application.configureDatabases() {
     )
 
     transaction {
-        SchemaUtils.create(Workouts)
+        SchemaUtils.create(Workouts, Exercises)
     }
 }

@@ -25,7 +25,8 @@ fun Route.workoutRoutes(repository: WorkoutRepository) {
 
                 call.respond(HttpStatusCode.Created, newWorkout)
             } catch (e: Exception) {
-                call.respond(HttpStatusCode.BadRequest, "Invalid JSON format")
+                e.printStackTrace()
+                call.respond(HttpStatusCode.BadRequest, "Detailed Error: ${e.localizedMessage}")
             }
         }
 
