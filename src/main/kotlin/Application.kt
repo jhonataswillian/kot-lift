@@ -1,17 +1,14 @@
 package com.example
 
-import com.example.plugins.configureDatabases
-import com.example.plugins.configureMonitoring
-import com.example.plugins.configureRouting
-import com.example.plugins.configureSerialization
-import com.example.plugins.configureStatusPages
+import com.example.plugins.*
 import com.example.repositories.ExposedExerciseRepository
 import com.example.repositories.ExposedWorkoutRepository
 import com.example.routes.exerciseRoutes
 import com.example.routes.workoutRoutes
+import com.example.services.ExerciseService
 import com.example.services.WorkoutService
 import io.ktor.server.application.*
-import io.ktor.server.routing.routing
+import io.ktor.server.routing.*
 
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
@@ -28,9 +25,10 @@ fun Application.module() {
     val workoutService = WorkoutService(workoutRepository)
 
     val exerciseRepository = ExposedExerciseRepository()
+    val exerciseService = ExerciseService(exerciseRepository)
 
     routing {
         workoutRoutes(workoutService)
-        exerciseRoutes(exerciseRepository)
+        exerciseRoutes(exerciseService)
     }
 }

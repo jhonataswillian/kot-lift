@@ -1,21 +1,20 @@
 package com.example.routes
 
 import com.example.dto.CreateExerciseRequest
-import com.example.dto.toModel
-import com.example.repositories.ExerciseRepository
+import com.example.services.ExerciseService
 import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 
-fun Route.exerciseRoutes(repository: ExerciseRepository) {
+fun Route.exerciseRoutes(service: ExerciseService) {
 
     route("/exercises") {
         // Criar Exercício
         post {
             val exercise = call.receive<CreateExerciseRequest>()
-            val newExercise = repository.addExercise(exercise.toModel())
+            val newExercise = service.create(exercise)
             call.respond(HttpStatusCode.Created, newExercise)
         }
 
@@ -27,7 +26,7 @@ fun Route.exerciseRoutes(repository: ExerciseRepository) {
                 return@delete
             }
 
-            val deleted = repository.deleteExercise(id)
+            val deleted = service.delete(id)
             if (deleted) {
                 call.respond(HttpStatusCode.NoContent)
             } else {
@@ -44,7 +43,7 @@ fun Route.exerciseRoutes(repository: ExerciseRepository) {
                 return@get
             }
 
-            val exercises = repository.exercisesByWorkout(workoutId)
+            val exercises = service.findAllByWorkout(workoutId)
             call.respond(HttpStatusCode.OK, exercises)
         }
     }
