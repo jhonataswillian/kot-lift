@@ -1,51 +1,83 @@
-# KtorFit API 🏋️‍♂️⚡
+# KtorFit
 
-**KtorFit** is a high-performance RESTful API designed for tracking gym workouts, loads, and repetitions. Built with **Kotlin** and **Ktor**, this project demonstrates modern backend development practices, focusing on idiomatic Kotlin syntax, asynchronous processing, and type-safe database interactions.
+**KtorFit** is a high-performance, type-safe RESTful API designed for tracking gym workouts, exercises, and training volume. Built with **Modern Kotlin** and **Ktor**, this project demonstrates a clean, scalable backend architecture following the "Kotlin Way".
 
-## 🚀 Tech Stack
+## Tech Stack
 
-*   **Language:** [Kotlin](https://kotlinlang.org/) (Latest Stable)
+*   **Language:** [Kotlin](https://kotlinlang.org/) (JVM 21)
 *   **Framework:** [Ktor Server](https://ktor.io/) (Netty Engine)
-*   **Database:** [H2 Database](https://www.h2database.com/) (In-Memory for Dev / File-based)
+*   **Database:** [H2 Database](https://www.h2database.com/) (File-based Persistence)
 *   **ORM:** [Exposed](https://github.com/JetBrains/Exposed) (Kotlin SQL Framework)
 *   **Serialization:** Kotlinx Serialization (JSON)
-*   **Build System:** Gradle Kotlin DSL
+*   **Architecture:** Route-Service-Repository Pattern with DTOs
 
-## 🏗️ Architecture & Features
+## Key Features
 
-*   **Type-Safe Routing:** Leveraging Ktor's DSL for clean and readable endpoint definitions.
-*   **Async Database Access:** Non-blocking database operations using Exposed's coroutine support.
-*   **Content Negotiation:** Automatic JSON serialization/deserialization.
-*   **Clean Architecture:** Separation of concerns between Routes, Models, and Data Access Objects (DAOs).
+*   **Workout Management:** Create, read, and delete workouts with duration validation.
+*   **Exercise Tracking:** Add exercises to workouts with weight, sets, and reps.
+*   **Business Logic:**
+    *   Validates workout duration (min. 5 minutes).
+    *   Validates exercise weights (non-negative).
+*   **Analytics:** Generates **Volume Reports** (Total Load = Weight * Sets * Reps) per workout.
+*   **Robust Error Handling:** Global exception handling using Ktor Status Pages.
+*   **Persistence:** Data is persisted locally in a file-based H2 database.
 
-## 🛠️ Getting Started
+## Getting Started
 
 ### Prerequisites
-*   JDK 17+
-*   IntelliJ IDEA (Recommended)
+*   JDK 21+
+*   Git
 
-### Running the Application
-1.  Clone the repository:
+### Installation & Running
+
+1.  **Clone the repository:**
     ```bash
-    https://github.com/jhonataswillian/kot-lift
+    git clone https://github.com/jhonataswillian/ktorfit.git
+    cd ktorfit
     ```
-2.  Open the project in IntelliJ IDEA.
-3.  Run the `Application.kt` file or execute via Gradle:
+
+2.  **Run the application:**
     ```bash
     ./gradlew run
     ```
 
-The API will start at `http://0.0.0.0:8080`.
+The server will start at `http://0.0.0.0:8080`.
 
-## 📝 API Endpoints (Planned)
+## API Endpoints
 
+### Workouts
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| `POST` | `/workouts` | Create a new workout |
 | `GET` | `/workouts` | List all workouts |
-| `GET` | `/workouts/{id}` | Get specific workout details |
-| `PUT` | `/workouts/{id}` | Update a workout |
-| `DELETE` | `/workouts/{id}` | Remove a workout |
+| `POST` | `/workouts` | Create a new workout |
+| `GET` | `/workouts/{id}` | Get workout details |
+| `DELETE` | `/workouts/{id}` | Delete a workout |
+| `GET` | `/workouts/{id}/report` | **Get workout volume report** |
+
+### Exercises
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/exercises` | Add an exercise |
+| `DELETE` | `/exercises/{id}` | Remove an exercise |
+| `GET` | `/workouts/{id}/exercises` | List exercises for a specific workout |
+
+## Project Structure
+
+```
+src/main/kotlin/com/example
+├── database/       # Database Tables (Schema)
+├── dtos/           # Data Transfer Objects (Request/Response)
+├── models/         # Domain Models
+├── plugins/        # Ktor Configuration (Routing, Serialization, DB)
+├── repositories/   # Data Access Layer (Exposed Implementation)
+├── routes/         # API Endpoints
+└── services/       # Business Logic & Validation
+```
 
 ---
-*Built with ❤️ and Kotlin.*
+
+Developed by **Jhonatas Willian**
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jhonataswillian/)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/jhonataswillian)
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:jhonatas.willian.dev@gmail.com)
