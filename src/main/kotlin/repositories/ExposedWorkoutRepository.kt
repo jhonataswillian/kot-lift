@@ -23,7 +23,7 @@ class ExposedWorkoutRepository : WorkoutRepository {
     override suspend fun allWorkouts(limit: Int, offset: Long): List<Workout> = dbQuery {
         Workouts
             .selectAll()
-            .orderBy(Workouts.date to SortOrder.DESC)
+            .orderBy(Workouts.id to SortOrder.DESC)
             .limit(count = limit).offset(start = offset)
             .map { resultRowToWorkout(it) }
     }

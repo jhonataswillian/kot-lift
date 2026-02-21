@@ -38,7 +38,7 @@ fun Route.workoutRoutes(service: WorkoutService) {
                     return@get
                 }
 
-                val  workout = service.findById(id)
+                val  workout = service.getWorkoutDetails(id)
                 if (workout != null) {
                     call.respond(HttpStatusCode.OK, workout)
                 } else {

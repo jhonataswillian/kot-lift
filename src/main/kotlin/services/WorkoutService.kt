@@ -1,6 +1,7 @@
 package com.example.services
 
 import com.example.dto.CreateWorkoutRequest
+import com.example.dto.WorkoutDetailsResponse
 import com.example.dto.WorkoutReport
 import com.example.dto.toModel
 import com.example.models.Workout
@@ -60,6 +61,22 @@ class WorkoutService(
             workoutId = workout.id!!,
             totalVolume = totalVolume,
             exerciseCount = exercises.size
+        )
+    }
+
+    suspend fun getWorkoutDetails(id: Int): WorkoutDetailsResponse? {
+
+        val workout = repository.workoutById(id) ?: return null
+
+        val exercises = exerciseRepository.exercisesByWorkout(id)
+
+        return WorkoutDetailsResponse(
+            id = workout.id!!,
+            name = workout.name,
+            description = workout.description,
+            durationMinutes = workout.durationMinutes,
+            date = workout.date,
+            exercises = exercises
         )
     }
 }
