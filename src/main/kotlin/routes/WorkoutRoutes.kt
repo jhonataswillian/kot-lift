@@ -57,6 +57,24 @@ fun Route.workoutRoutes(service: WorkoutService) {
                 call.respond(HttpStatusCode.OK, report)
             }
 
+            // === UPDATE por ID ===
+            put {
+                val id = call.parameters["id"]?.toIntOrNull()
+                if (id == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Invalid ID")
+                    return@put
+                }
+
+                val request = call.receive<CreateWorkoutRequest>()
+                val updated = service.update(id, request)
+
+                if (updated) {
+                    call.respond(HttpStatusCode.OK, "Treino atualizado com sucesso!")
+                } else {
+                    call.respond(HttpStatusCode.NotFound, "Treino não encontrado")
+                }
+            }
+
             // === DELETE por ID ===
             delete {
                 val id = call.parameters["id"]?.toIntOrNull()
