@@ -13,14 +13,18 @@
 
 ## Key Features
 
-*   **Workout Management:** Create, read, and delete workouts with duration validation.
-*   **Exercise Tracking:** Add exercises to workouts with weight, sets, and reps.
-*   **Business Logic:**
-    *   Validates workout duration (min. 5 minutes).
-    *   Validates exercise weights (non-negative).
-*   **Analytics:** Generates **Volume Reports** (Total Load = Weight * Sets * Reps) per workout.
+*   **Workout Management:**
+    *   Create, read, update, and delete workouts.
+    *   **Pagination & Sorting:** List workouts with `page` and `limit` support, ordered by date.
+    *   **Validation:** Enforces minimum duration (5 minutes).
+*   **Exercise Tracking:**
+    *   Add exercises to workouts with weight, sets, and reps.
+    *   **Validation:** Enforces non-negative weights.
+*   **Analytics:**
+    *   Generates **Volume Reports** (Total Load = Weight * Sets * Reps) per workout.
+    *   Detailed workout view including exercise list.
 *   **Robust Error Handling:** Global exception handling using Ktor Status Pages.
-*   **Persistence:** Data is persisted locally in a file-based H2 database.
+*   **Configuration:** Database credentials externalized in `application.conf`.
 
 ## Getting Started
 
@@ -46,13 +50,14 @@ The server will start at `http://0.0.0.0:8080`.
 ## API Endpoints
 
 ### Workouts
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/workouts` | List all workouts |
-| `POST` | `/workouts` | Create a new workout |
-| `GET` | `/workouts/{id}` | Get workout details |
-| `DELETE` | `/workouts/{id}` | Delete a workout |
-| `GET` | `/workouts/{id}/report` | **Get workout volume report** |
+| Method | Endpoint | Description | Query Params |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/workouts` | List all workouts (Paginated) | `?page=1&limit=10` |
+| `POST` | `/workouts` | Create a new workout | - |
+| `GET` | `/workouts/{id}` | Get workout details (with exercises) | - |
+| `PUT` | `/workouts/{id}` | Update a workout | - |
+| `DELETE` | `/workouts/{id}` | Delete a workout | - |
+| `GET` | `/workouts/{id}/report` | **Get workout volume report** | - |
 
 ### Exercises
 | Method | Endpoint | Description |
@@ -66,9 +71,9 @@ The server will start at `http://0.0.0.0:8080`.
 ```
 src/main/kotlin/com/example
 ├── database/       # Database Tables (Schema)
-├── dtos/           # Data Transfer Objects (Request/Response)
+├── dto/            # Data Transfer Objects (Request/Response)
 ├── models/         # Domain Models
-├── plugins/        # Ktor Configuration (Routing, Serialization, DB)
+├── plugins/        # Ktor Configuration (Routing, Serialization, DB, Monitoring)
 ├── repositories/   # Data Access Layer (Exposed Implementation)
 ├── routes/         # API Endpoints
 └── services/       # Business Logic & Validation
