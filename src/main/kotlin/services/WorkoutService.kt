@@ -43,6 +43,8 @@ class WorkoutService(
 
     // Função para validar o request
     private fun validateRequest(request: CreateWorkoutRequest) {
+        require(request.name.isNotBlank()) { "O nome do treino não pode ficar em branco."}
+
         if (request.durationMinutes < 5) {
             throw IllegalArgumentException("A duração deve ser de pelo menos 5 minutos")
         }
